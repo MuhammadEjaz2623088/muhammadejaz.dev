@@ -225,8 +225,13 @@
         <span class="section-tag">Portfolio</span>
         <h2 class="section-title">Selected Projects</h2>
       </div>
+      <div class="project-filters" role="tablist" aria-label="Filter projects by category">
+        <button class="filter-btn active" type="button" data-filter="all" role="tab" aria-selected="true">All Projects</button>
+        <button class="filter-btn" type="button" data-filter="wordpress" role="tab" aria-selected="false">WordPress</button>
+        <button class="filter-btn" type="button" data-filter="frontend" role="tab" aria-selected="false">Frontend Development</button>
+      </div>
 <div class="projects-grid">
-        <article class="project-card">
+        <article class="project-card" data-category="wordpress">
           <div class="project-image">
             <img src="assets/images/projects/pexels-denys-9327162.jpg" alt="The B1 Mall e-commerce website mockup showing luxury product display" loading="lazy" />
             <div class="project-overlay">
@@ -242,7 +247,7 @@
             <p>Custom WooCommerce e-commerce website with product pages, filters and mobile-friendly shopping experience focused on clean UI and usability.</p>
           </div>
         </article>
-        <article class="project-card">
+        <article class="project-card" data-category="wordpress">
           <div class="project-image">
             <img src="assets/images/projects/pexels-godisable-jacob-226636-1936848.jpg" alt="True Smile Works dental clinic website mockup" loading="lazy" />
             <div class="project-overlay">
@@ -258,7 +263,7 @@
             <p>Professional dental services website built with WordPress and Elementor, featuring custom sections, smooth layout and mobile responsiveness.</p>
           </div>
         </article>
-        <article class="project-card">
+        <article class="project-card" data-category="frontend">
           <div class="project-image">
             <img src="assets/images/projects/1600w-lFPtW72bHY0.jpg" alt="Xworks business website mockup" loading="lazy" />
             <div class="project-overlay">
@@ -274,7 +279,7 @@
             <p>Modern and responsive business website built with clean HTML, CSS and Tailwind. Fully optimized for performance and conversions.</p>
           </div>
         </article>
-        <article class="project-card">
+        <article class="project-card" data-category="wordpress">
           <div class="project-image">
             <img src="assets/images/projects/pexels-freestocks-285171.jpg" alt="Yofit Hot Studios fitness website mockup" loading="lazy" />
             <div class="project-overlay">
@@ -290,7 +295,7 @@
             <p>Fully customized WordPress website with clean design, responsive layout and optimized performance for a fitness and wellness brand.</p>
           </div>
         </article>
-        <article class="project-card">
+        <article class="project-card" data-category="wordpress">
           <div class="project-image">
             <img src="assets/images/projects/pexels-silverkblack-36730599.jpg" alt="Fatima Al Qasimi portfolio website mockup" loading="lazy" />
             <div class="project-overlay">
@@ -306,7 +311,7 @@
             <p>Professional portfolio and services website developed in WordPress with custom sections, smooth layout and mobile responsiveness.</p>
           </div>
         </article>
-        <article class="project-card">
+        <article class="project-card" data-category="wordpress">
           <div class="project-image">
             <img src="assets/images/projects/1600w-bNzXnSwXH-g.jpg" alt="Kalantar Law Group law firm website mockup" loading="lazy" />
             <div class="project-overlay">
@@ -322,7 +327,7 @@
             <p>Professional law firm website developed in WordPress with custom sections, smooth layout and mobile responsiveness.</p>
           </div>
         </article>
-        <article class="project-card">
+        <article class="project-card project-card--extra is-hidden" data-category="frontend">
           <div class="project-image">
             <img src="assets/images/projects/1600w-lFPtW72bHY0.jpg" alt="Multi-Page HTML Portfolio website mockup" loading="lazy" />
             <div class="project-overlay">
@@ -341,6 +346,9 @@
             <p>My earlier 6-page professional portfolio website built with HTML5, Tailwind CSS, Vanilla JS, and Vite, featuring responsive layouts and modern styling.</p>
           </div>
         </article>
+      </div>
+      <div class="projects-more-wrap">
+        <button class="btn btn-view-more" id="viewMoreProjectsBtn" type="button" aria-expanded="false">View More</button>
       </div>
     </div>
   </section>
@@ -457,7 +465,7 @@
   <footer class="footer">
     <div class="container">
       <p>© <span id="year"></span> Muhammad Ejaz. All rights reserved.</p>
-      <p class="footer-note">Built with ❤️ using HTML, CSS & JavaScript</p>
+      <p class="footer-note">Built with ❤️ using HTML, CSS &amp; JavaScript</p>
     </div>
   </footer>
 

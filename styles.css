@@ -734,6 +734,80 @@ body:hover .cursor-glow {
   transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.projects-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.btn-view-more {
+  background: var(--gradient);
+  color: #fff;
+  border: none;
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+}
+
+.btn-view-more:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
+}
+
+.btn-view-more:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.filter-btn {
+  appearance: none;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), 0 8px 20px rgba(168, 85, 247, 0.15);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active,
+.filter-btn[aria-selected="true"] {
+  color: #fff;
+  background: var(--gradient);
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4), 0 4px 12px rgba(236, 72, 153, 0.2);
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+.project-card.is-hiding {
+  opacity: 0;
+  transform: scale(0.97);
+  pointer-events: none;
+}
+
+.project-card.is-hidden {
+  display: none !important;
+}
+
 /* ========================================
    Projects Section
 ======================================== */
@@ -748,7 +822,7 @@ body:hover .cursor-glow {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: var(--transition);
+  transition: opacity 0.35s ease, transform 0.35s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .project-card:hover {
@@ -1317,6 +1391,16 @@ svg {
     grid-template-columns: 1fr;
   }
 
+  .project-filters {
+    margin-bottom: 28px;
+    gap: 10px;
+  }
+
+  .filter-btn {
+    padding: 9px 18px;
+    font-size: 0.85rem;
+  }
+
   .skills-grid,
   .projects-grid {
     grid-template-columns: 1fr;
@@ -1403,6 +1487,16 @@ svg {
     justify-content: center;
     width: fit-content;
     max-width: 100%;
+  }
+
+  .project-filters {
+    justify-content: center;
+  }
+
+  .filter-btn {
+    flex: 1 1 calc(50% - 10px);
+    text-align: center;
+    min-width: 0;
   }
 
   .section {

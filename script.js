@@ -349,8 +349,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const recipient = "muhammadejaz2623088@gmail.com";
-
             const submitButton = contactForm.querySelector('button[type="submit"]');
             if (submitButton) submitButton.disabled = true;
 
@@ -428,6 +426,167 @@ document.addEventListener("DOMContentLoaded", () => {
         syncMobileMenuAria();
 
     });
+
+
+    /* =========================
+       14. PROJECT FILTERS + VIEW MORE
+       ========================= */
+
+    const filterButtons = document.querySelectorAll(".filter-btn[data-filter]");
+    const projectCards = document.querySelectorAll(".project-card[data-category]");
+    const viewMoreProjectsBtn = document.querySelector("#viewMoreProjectsBtn");
+    const extraProjectCards = document.querySelectorAll(".project-card--extra");
+
+    let projectsExpanded = false;
+    const pendingHide = new WeakMap();
+
+    function setActiveFilterButton(activeButton) {
+        filterButtons.forEach((button) => {
+            const isActive = button === activeButton;
+            button.classList.toggle("active", isActive);
+            button.setAttribute("aria-selected", String(isActive));
+        });
+    }
+
+    function clearPendingHide(card) {
+        const pending = pendingHide.get(card);
+        if (!pending) return;
+
+        if (pending.timeoutId) {
+            clearTimeout(pending.timeoutId);
+        }
+
+        if (pending.handler) {
+            card.removeEventListener("transitionend", pending.handler);
+        }
+
+        pendingHide.delete(card);
+    }
+
+    function showProjectCard(card) {
+        clearPendingHide(card);
+        card.classList.remove("is-hidden");
+        card.classList.add("is-hiding");
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                if (!pendingHide.has(card)) {
+                    card.classList.remove("is-hiding");
+                }
+            });
+        });
+    }
+
+    function hideProjectCard(card) {
+        if (card.classList.contains("is-hidden")) {
+            clearPendingHide(card);
+            card.classList.remove("is-hiding");
+            return;
+        }
+
+        clearPendingHide(card);
+        card.classList.add("is-hiding");
+
+        const finalizeHide = () => {
+            const pending = pendingHide.get(card);
+            if (!pending || pending.handler !== handler) return;
+
+            clearPendingHide(card);
+            if (card.classList.contains("is-hiding")) {
+                card.classList.add("is-hidden");
+                card.classList.remove("is-hiding");
+            }
+        };
+
+        const handler = (event) => {
+            if (event.target !== card || event.propertyName !== "opacity") return;
+            finalizeHide();
+        };
+
+        card.addEventListener("transitionend", handler);
+        const timeoutId = window.setTimeout(finalizeHide, 380);
+        pendingHide.set(card, { handler, timeoutId });
+    }
+
+    function getActiveCategory() {
+        const active = document.querySelector(".filter-btn.active[data-filter]");
+        return active?.getAttribute("data-filter") || "all";
+    }
+
+    function updateViewMoreButtonVisibility() {
+        if (!viewMoreProjectsBtn) return;
+
+        const category = getActiveCategory();
+
+        if (category !== "all") {
+            viewMoreProjectsBtn.style.display = "none";
+            return;
+        }
+
+        if (extraProjectCards.length === 0) {
+            viewMoreProjectsBtn.style.display = "none";
+            return;
+        }
+
+        viewMoreProjectsBtn.style.display = "";
+        viewMoreProjectsBtn.textContent = projectsExpanded ? "Show Less" : "View More";
+        viewMoreProjectsBtn.setAttribute("aria-expanded", String(projectsExpanded));
+    }
+
+    function filterProjects(category) {
+        projectCards.forEach((card) => {
+            const cardCategory = card.getAttribute("data-category");
+            const isExtra = card.classList.contains("project-card--extra");
+            const categoryMatch = category === "all" || cardCategory === category;
+
+            if (category !== "all") {
+                if (categoryMatch) {
+                    if (card.classList.contains("is-hidden") || card.classList.contains("is-hiding")) {
+                        showProjectCard(card);
+                    }
+                } else {
+                    hideProjectCard(card);
+                }
+                return;
+            }
+
+            if (!isExtra) {
+                if (card.classList.contains("is-hidden") || card.classList.contains("is-hiding")) {
+                    showProjectCard(card);
+                }
+                return;
+            }
+
+            if (projectsExpanded && categoryMatch) {
+                if (card.classList.contains("is-hidden") || card.classList.contains("is-hiding")) {
+                    showProjectCard(card);
+                }
+            } else {
+                hideProjectCard(card);
+            }
+        });
+
+        updateViewMoreButtonVisibility();
+    }
+
+    if (filterButtons.length && projectCards.length) {
+        filterButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const category = button.getAttribute("data-filter") || "all";
+                setActiveFilterButton(button);
+                filterProjects(category);
+            });
+        });
+
+        filterProjects(getActiveCategory());
+    }
+
+    if (viewMoreProjectsBtn) {
+        viewMoreProjectsBtn.addEventListener("click", () => {
+            projectsExpanded = !projectsExpanded;
+            filterProjects(getActiveCategory());
+        });
+    }
 
 
     /* =========================
