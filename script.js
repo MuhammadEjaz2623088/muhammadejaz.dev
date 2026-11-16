@@ -26,24 +26,32 @@ document.addEventListener("DOMContentLoaded", () => {
        2. MOBILE NAVIGATION
        ========================= */
 
+    function syncMobileMenuAria() {
+        const isMobile = window.innerWidth <= 768;
+        const isOpen = navLinks?.classList.contains("active");
+
+        navToggle?.setAttribute("aria-expanded", String(isOpen));
+
+        if (!navLinks) return;
+        if (isMobile) {
+            navLinks.setAttribute("aria-hidden", String(!isOpen));
+        } else {
+            navLinks.removeAttribute("aria-hidden");
+        }
+    }
+
     function openMobileMenu() {
         navToggle?.classList.add("active");
         navLinks?.classList.add("active");
-
-        navToggle?.setAttribute("aria-expanded", "true");
-        navLinks?.setAttribute("aria-hidden", "false");
-
         document.body.classList.add("menu-open");
+        syncMobileMenuAria();
     }
 
     function closeMobileMenu() {
         navToggle?.classList.remove("active");
         navLinks?.classList.remove("active");
-
-        navToggle?.setAttribute("aria-expanded", "false");
-        navLinks?.setAttribute("aria-hidden", "true");
-
         document.body.classList.remove("menu-open");
+        syncMobileMenuAria();
     }
 
     function toggleMobileMenu() {
@@ -416,6 +424,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.innerWidth > 768) {
             closeMobileMenu();
         }
+
+        syncMobileMenuAria();
 
     });
 
