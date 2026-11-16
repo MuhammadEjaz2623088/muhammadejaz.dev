@@ -782,6 +782,7 @@ body:hover .cursor-glow {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   opacity: 0;
   transition: var(--transition);
 }
